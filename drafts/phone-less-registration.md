@@ -581,7 +581,13 @@ Each configured OIDC provider MUST define (at minimum):
 
 ## Sequence Diagram
 
+![Registration Sequence Diagram](registration-flow-sequence.png)
+
+<details>
+<summary>PlantUML Source</summary>
+
 ```plantuml
+@startuml
 participant User
 participant Molly
 participant Flatline
@@ -641,7 +647,10 @@ note over Molly,Flatline: Pre-registration state
 IDP->Flatline: Back-channel logout (logout_token)
 Flatline->Flatline: Verify logout_token, revoke user session
 note over Molly,Flatline: 401 on next request, app will show "unregistered" error
+@enduml
 ```
+
+</details>
 
 The full registration flow, including UX and system interactions:
 
