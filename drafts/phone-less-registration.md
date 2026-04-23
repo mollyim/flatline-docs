@@ -90,6 +90,7 @@ Signal's registration and identity model works as follows:
     - verifying with SMS and Signal PIN:
         - SMS is skipped if backups were active in Android's Settings and the user logged in Play Services.
 
+> [!NOTE]
 > Signal generates two long-term Identity Keys (IK): one linked to ACI and another to the PNI.
 > Flatline does not plan to use the PNI identity (though this remains an open design question).
 > For clarity, all references to the Identity Key (IK) later in this document refer to the ACI-linked key.
@@ -211,6 +212,7 @@ Same as **Profile B**, but registration is **open and free**: anyone can registe
 control. The server may still be actively moderated; the difference is **open admission**. Minimal friction checks such
 as CAPTCHAs may be added to limit abuse.
 
+> [!IMPORTANT]
 > **Out of scope.** Open-admission public servers are high-risk without stronger anti-abuse mechanisms.
 > Deferred until viable anti-abuse solutions are identified.
 
@@ -283,6 +285,7 @@ We should not try to distinguish these cases. If a registration presents a princ
 a different `(provider, sub)` mapping, the prototype rejects the registration because it cannot determine whether this
 is legitimate continuity or a conflicting principal.
 
+> [!NOTE]
 > Cross-IdP continuity (allowing a user to prove control of the same principal across providers and retain their
 > existing account) is conceptually supported but deferred for the prototype; if implemented, the PNI would remain
 > unchanged.
@@ -394,10 +397,10 @@ We adopt the existing Signal username and discriminator model unchanged:
 
 Principals are never exposed as fallback usernames and are not auto-derived into usernames.
 
+> [!NOTE]
 > Principals are typically easier to guess than phone numbers, since they often map to meaningful identifiers (e.g.,
-> emails).
-> This is acceptable for Profiles A and B, where users are expected to know each other's principals when mapped this
-> way.
+> emails). This is acceptable for Profiles A and B, where users are expected to know each other's principals when
+> mapped this way.
 
 **Rationale:**
 
@@ -484,6 +487,7 @@ If the signing key is unchanged and the version counter has increased, no user a
 Molly must reject any re-fetched manifest whose version counter does not strictly exceed the previously accepted value
 to prevent rollback attacks.
 
+> [!WARNING]
 > The signed manifest authenticates which Flatline instance Molly is talking to. It does not prove that the instance
 > is honest. The authenticated Flatline instance is authoritative for the IdP metadata it provides. During
 > registration, Molly must validate the selected IdP issuer and endpoint URLs and require explicit user confirmation
@@ -696,4 +700,4 @@ Flatline does not infer IdP rotation schedules from JWKS metadata.
 Only an administrative command, invoked explicitly by the operator, refreshes the pinned JWKS atomically.
 Transient IO errors keep the old keyset.
 
-> This model avoids vendor-specific JWKS caching semantics and gives operators explicit control over key rotation.
+This model avoids vendor-specific JWKS caching semantics and gives operators explicit control over key rotation.
